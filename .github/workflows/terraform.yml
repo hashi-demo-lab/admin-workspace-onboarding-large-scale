@@ -21,6 +21,6 @@ jobs:
         run: |
           cd config
           echo $(ls *.yaml | jq -R . | jq -s .)
-          echo "WORKSPACES=$(ls *.yaml | jq -R . | jq -s .)" >> $GITHUB_ENV
+          echo "WORKSPACES=$(echo $(ls *.yaml | jq -R . | jq -s .))" >> $GITHUB_ENV
       - name: Test
         run: echo $WORKSPACES
