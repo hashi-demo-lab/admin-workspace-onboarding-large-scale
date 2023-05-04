@@ -5,7 +5,7 @@ create_repo: false
 create_variable_set: true
 workspace_tags:
   - nsx
-var_sets:
+     var_sets:
   my-set2:
     tags:
       - nsx
