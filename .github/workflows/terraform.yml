@@ -25,7 +25,7 @@ jobs:
       - name: Echo WORKSPACES
         run: echo $WORKSPACES
     outputs:
-      workspaces: $WORKSPACES
+      workspaces: echo $WORKSPACES
   configure-tfe-workspace:
     needs: parse-workspace-configuration
     runs-on: ubuntu-latest
