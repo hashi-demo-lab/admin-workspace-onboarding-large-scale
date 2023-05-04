@@ -1,4 +1,4 @@
-name: tfc-api-driven-workflow
+name: workspace-onboarding-api
 on:
   workflow_dispatch:
   push:
@@ -22,5 +22,7 @@ jobs:
           cd config
           echo $(ls *.yaml | jq -R . | jq -s .)
           echo "WORKSPACES=$(echo $(ls *.yaml | jq -R . | jq -s .))" >> $GITHUB_ENV
-      - name: Test
+      - name: Echo WORKSPACES
         run: echo $WORKSPACES
+    outputs:
+      workspace-yaml: $WORKSPACES
