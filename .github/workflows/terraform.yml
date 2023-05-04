@@ -36,4 +36,5 @@ jobs:
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
       - run: echo ${{ matrix.workspaces }}
-        name: 
+        name: echo file
+      
