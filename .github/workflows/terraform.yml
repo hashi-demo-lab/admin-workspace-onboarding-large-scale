@@ -13,7 +13,7 @@ env:
   ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
 jobs:
-  parse-workspace-configuration:
+  parse-workspace-config:
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v3
@@ -28,11 +28,12 @@ jobs:
     outputs: 
         workspaces: ${{ steps.get-workspace.outputs.workspaces }}
 
-  configure-tfe-workspace:
-    needs: parse-workspace-configuration
+  tfe-workspace:
+    needs: parse-workspace-config
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        workspaces: ${{fromJson(needs.parse-workspace-configuration.outputs.workspaces)}}
+        workspaces: ${{fromJson(needs.parse-workspace-config.outputs.workspaces)}}
     steps:
       - run: echo ${{ matrix.workspaces }}
+        name: 
