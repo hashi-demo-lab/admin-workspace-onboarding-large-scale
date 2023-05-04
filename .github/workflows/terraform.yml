@@ -45,7 +45,7 @@ jobs:
         run: echo ${{ matrix.workspaces }}
       - name: checkout-repo
         uses: actions/checkout@v3
-      - name: pretty-${{ matrix.workspaces }}.yaml
+      - name: pretty-${{ matrix.workspaces }}
         uses: mikefarah/yq@master
         with:
           cmd: yq ./config/${{ matrix.workspaces }}
