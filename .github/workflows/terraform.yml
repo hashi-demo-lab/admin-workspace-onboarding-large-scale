@@ -48,5 +48,5 @@ jobs:
       - name: pretty-${{ matrix.workspaces }}.yaml
         uses: mikefarah/yq@master
         with:
-          cmd: yq -p ./config/${{ matrix.workspaces }}
+          cmd: yq ./config/${{ matrix.workspaces }}
 
