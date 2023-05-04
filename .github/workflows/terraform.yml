@@ -17,13 +17,17 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v3
-      - name: get workspace yaml
+      - name: get-workspace-yaml
+        id: get-workspace
         run: |
           cd config
           echo $(ls *.yaml | jq -R . | jq -s .)
           echo "workspaces=$(echo $(ls *.yaml | jq -R . | jq -s .))" >> $GITHUB_OUTPUT
-      - name: Echo WORKSPACES
-        run: echo $WORKSPACES
+      - name: Echo-WORKSPACES
+        run: echo "{{ steps.get-workspace.outputs.workspaces }}"
+    outputs: 
+        workspaces: ${{ steps.get-workspace.outputs.workspaces }}
+
   configure-tfe-workspace:
     needs: parse-workspace-configuration
     runs-on: ubuntu-latest
