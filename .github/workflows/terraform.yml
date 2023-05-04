@@ -29,7 +29,8 @@ jobs:
       - name: validate-yaml-map
         uses: mikefarah/yq@master
         with:
-          cmd: yq --exit-status 'tag == "!!map"' ./config/*.yaml -v
+          cmd: yq --exit-status 'tag == "!!map"' ./config/*.yaml -v; 
+
     outputs: 
         workspaces: ${{ steps.get-workspace.outputs.workspaces }}
 
@@ -44,3 +45,8 @@ jobs:
         run: echo ${{ matrix.workspaces }}
       - name: checkout-repo
         uses: actions/checkout@v3
+      - name: pretty-${{ matrix.workspaces }}.yaml
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq -p ./config/${{ matrix.workspaces }}.yaml
+
