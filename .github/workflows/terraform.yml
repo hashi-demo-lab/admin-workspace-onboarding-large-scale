@@ -1,0 +1,25 @@
+name: tfc-api-driven-workflow
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+env:
+  # No need to pass as inputs to each action
+  TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
+  TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+  TF_DIRECTORY: ""
+  ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+jobs:
+  parse-workspace-configuration:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          cd config
+          echo $(ls *.yaml | jq -R . | jq -s .)
+          echo "WORKSPACES=$(ls *.yaml | jq -R . | jq -s .)" >> $GITHUB_ENV
+    outputs:
+      workspaces: ${{ steps.upload.outputs.configuration_version_id }}
