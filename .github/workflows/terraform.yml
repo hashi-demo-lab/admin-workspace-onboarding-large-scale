@@ -16,15 +16,16 @@ jobs:
   parse-ws-config:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v3
+      - name: checkout-repo
+        uses: actions/checkout@v3
       - name: get-workspace-yaml
         id: get-workspace
         run: |
           cd config
           echo $(ls *.yaml | jq -R . | jq -s .)
           echo "workspaces=$(echo $(ls *.yaml | jq -R . | jq -s .))" >> $GITHUB_OUTPUT
-      - name: Echo-WORKSPACES
-        run: echo "{{ steps.get-workspace.outputs.workspaces }}"
+      - name: echo-workspaces
+        run: echo "${{ steps.get-workspace.outputs.workspaces }}"
     outputs: 
         workspaces: ${{ steps.get-workspace.outputs.workspaces }}
 
@@ -35,6 +36,11 @@ jobs:
       matrix: 
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
-      - run: echo ${{ matrix.workspaces }}
-        name: echo file
-      
+      - name: echo-file
+        run: echo ${{ matrix.workspaces }}
+      - name: checkout-repo
+        uses: actions/checkout@v3
+      - name: validate-yaml-yq
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq validate ./config/${{ matrix.workspaces }}
