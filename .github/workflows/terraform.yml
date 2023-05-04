@@ -29,11 +29,11 @@ jobs:
         workspaces: ${{ steps.get-workspace.outputs.workspaces }}
 
   tfe-ws:
-    needs: parse-workspace-config
+    needs: parse-ws-config
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        workspaces: ${{fromJson(needs.parse-workspace-config.outputs.workspaces)}}
+        workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
       - run: echo ${{ matrix.workspaces }}
         name: 
