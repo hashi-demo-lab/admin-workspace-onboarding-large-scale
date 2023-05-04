@@ -1,0 +1,13 @@
+organization: hashi-demos-apj
+workspace_name: aws-future-app-profject
+create_project: true
+create_repo: false
+project_name: DemoProject1
+file_triggers_enabled: false
+create_variable_set: false
+vcs_repo:
+  identifier: hashicorp-demo-lab/app-the-future-aws
+  branch: main
+  tags_regex: ^\d+.\d+.\d+$
+  ingress_submodules: null
+  oauth_token_id: ot-EEzS6zKkh8tEBC7o

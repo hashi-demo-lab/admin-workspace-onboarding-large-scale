@@ -1,0 +1,60 @@
+organization: hashi-demos-apj
+workspace_name: aws-future-app-project-for-amp
+create_project: false
+create_repo: false
+project_name: Aarons-Projects
+file_triggers_enabled: false
+create_variable_set: true
+workspace_agents: true
+execution_mode: agent
+agent_pool_name: AaronPool
+workspace_tags:
+  - dynamic_creds-demo
+vcs_repo:
+  identifier: hashicorp-demo-lab/app-the-future-aws
+  branch: dev
+  tags_regex: ^\d+.\d+.\d+$
+  ingress_submodules: null
+  oauth_token_id: ot-EEzS6zKkh8tEBC7o
+var_sets:
+  dynamic-workload-identity-set:
+    tags:
+      - dynamic_creds-demo
+    variable_set_name: dynamic-workload-identity-set
+    variables:
+      CLOUD_PROVIDER_AWS:
+        category: env
+        description:
+        hcl: false
+        sensitive: false
+        value: true
+      TFC_VAULT_APPLY_ROLE:
+        category: env
+        description:
+        hcl: false
+        sensitive: false
+        value: vault-demo-assumed-role
+      TFC_VAULT_PLAN_ROLE:
+        category: env
+        description:
+        hcl: false
+        sensitive: false
+        value: vault-demo-assumed-role
+      TFC_WORKLOAD_IDENTITY_AUDIENCE:
+        category: env
+        description:
+        hcl: false
+        sensitive: false
+        value: vault.workload.identity
+      VAULT_ADDR:
+        category: env
+        description:
+        hcl: false
+        sensitive: false
+        value: http://localhost:8200
+      VAULT_PATH:
+        category: env
+        description:
+        hcl: false
+        sensitive: false
+        value: aws-dynamic-credentials

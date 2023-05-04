@@ -1,0 +1,24 @@
+organization: hashi-demos-apj
+workspace_name: vcs-driven-newrepo
+create_project: false
+create_repo: true
+project_name: MyProject
+file_triggers_enabled: false
+create_variable_set: false
+github:
+  github_org: "hashicorp-demo-lab"
+  github_org_owner: "hashicorp-demo-lab"
+  github_repo_name: "Test3-createrepo"
+  github_repo_desc: "Rep createed by terraform"
+  github_repo_visibility: "public"
+  github_team_name: "demo-team"
+  github_template_owner: "hashicorp-demo-lab"
+  github_repo_permission: "admin"
+  github_template_repo: "terraform-template"
+  github_template_include_branches: false
+vcs_repo:
+  identifier: hashicorp-demo-lab/Test3-createrepo
+  branch: main
+  tags_regex: ^\d+.\d+.\d+$
+  ingress_submodules: null
+  oauth_token_id: ot-EEzS6zKkh8tEBC7o
