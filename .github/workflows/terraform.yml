@@ -21,11 +21,9 @@ jobs:
         run: |
           cd config
           echo $(ls *.yaml | jq -R . | jq -s .)
-          echo "WORKSPACES=$(echo $(ls *.yaml | jq -R . | jq -s .))" >> $GITHUB_ENV
+          echo "workspaces=$(echo $(ls *.yaml | jq -R . | jq -s .))" >> $GITHUB_OUTPUT
       - name: Echo WORKSPACES
         run: echo $WORKSPACES
-    outputs:
-      workspaces: echo $WORKSPACES
   configure-tfe-workspace:
     needs: parse-workspace-configuration
     runs-on: ubuntu-latest
