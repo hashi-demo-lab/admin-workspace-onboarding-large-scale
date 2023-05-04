@@ -43,4 +43,4 @@ jobs:
       - name: validate-yaml-yq
         uses: mikefarah/yq@master
         with:
-          cmd: yq validate ./config/${{ matrix.workspaces }}
+          cmd: yq --exit-status 'tag == "!!map"' ./config/${{ matrix.workspaces }}
