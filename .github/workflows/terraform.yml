@@ -17,9 +17,10 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v3
-      - run: |
+      - name: Set env
+        run: |
           cd config
           echo $(ls *.yaml | jq -R . | jq -s .)
           echo "WORKSPACES=$(ls *.yaml | jq -R . | jq -s .)" >> $GITHUB_ENV
-    outputs:
-      workspaces: ${{ steps.upload.outputs.configuration_version_id }}
+      - name: Test env
+        run: echo $WORKSPACES
