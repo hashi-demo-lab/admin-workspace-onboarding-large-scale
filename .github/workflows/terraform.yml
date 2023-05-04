@@ -32,6 +32,7 @@ jobs:
     needs: parse-workspace-configuration
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{fromJson(needs.parse-workspace-configuration.outputs.workspaces)}}
+      matrix: 
+        workspaces: ${{fromJson(needs.parse-workspace-configuration.outputs.workspaces)}}
     steps:
-      - run: echo ${{ matrix }}
+      - run: echo ${{ matrix.workspaces }}
