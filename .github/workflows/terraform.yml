@@ -26,3 +26,10 @@ jobs:
         run: echo $WORKSPACES
     outputs:
       workspace-yaml: $WORKSPACES
+  configure-tfe-workspace:
+    needs: parse-workspace-configuration
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{fromJson(needs.parse-workspace-configuration.outputs.workspace-yaml)}}
+    steps:
+      - run: echo ${{ matrix }}
