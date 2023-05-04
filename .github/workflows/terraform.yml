@@ -26,6 +26,10 @@ jobs:
           echo "workspaces=$(echo $(ls *.yaml | jq -R . | jq -s .))" >> $GITHUB_OUTPUT
       - name: echo-workspaces
         run: echo "${{ steps.get-workspace.outputs.workspaces }}"
+      - name: validate-yaml-map
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq --exit-status 'tag == "!!map"' ./config/*.yaml
     outputs: 
         workspaces: ${{ steps.get-workspace.outputs.workspaces }}
 
@@ -40,7 +44,3 @@ jobs:
         run: echo ${{ matrix.workspaces }}
       - name: checkout-repo
         uses: actions/checkout@v3
-      - name: validate-yaml-map
-        uses: mikefarah/yq@master
-        with:
-          cmd: yq --exit-status 'tag == "!!map"' ./config/${{ matrix.workspaces }}
