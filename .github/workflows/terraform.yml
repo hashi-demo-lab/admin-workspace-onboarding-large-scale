@@ -56,9 +56,8 @@ jobs:
          cache: 'pip'
       - name: install-python-dep
         run: pip install -r ./.github/workflows/requirements.txt
-        env:
-          TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
       - name: check-create-workspace
         run: python ./.github/workflows/test.py
         env:
           TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
+          WORKSPACE_NAME: ${{ matrix.workspaces }}
