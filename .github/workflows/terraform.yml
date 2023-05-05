@@ -69,9 +69,10 @@ jobs:
       matrix: 
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/checkout@v3
-        name: Checkout tfc github-actions #only required whilst actions are private
+      - name: checkout-repo
+        uses: actions/checkout@v3
+      - name: Checkout tfc github-actions #only required whilst actions are private
+        uses: actions/checkout@v3
         with:
           repository: hashicorp/tfc-workflows-github
           token: ${{ secrets.ACCESS_TOKEN }}
@@ -92,6 +93,15 @@ jobs:
       matrix: 
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
+      - name: checkout-repo
+        uses: actions/checkout@v3
+      - name: Checkout tfc github-actions #only required whilst actions are private
+        uses: actions/checkout@v3
+        with:
+          repository: hashicorp/tfc-workflows-github
+          token: ${{ secrets.ACCESS_TOKEN }}
+          persist-credentials: false
+          path: ./.github/actions/tfc-workflows-github
       - name: Run Terraform Plan
         uses: ./.github/actions/tfc-workflows-github/actions/create-run/
         continue-on-error: true
