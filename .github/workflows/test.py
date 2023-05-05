@@ -41,7 +41,7 @@ if not workspace_exists:
         }
     }
     try:
-        response = requests.post(API_ENDPOINT.format(ORG_NAME=os.getenv('ORGANIZATION_NAME')), headers=headers, json=payload)
+        response = requests.post(API_ENDPOINT.format(ORG_NAME=os.getenv('TF_CLOUD_ORGANIZATION')), headers=headers, json=payload)
         response.raise_for_status() # raise an exception if response status code is not 201 Created
         print("Workspace created successfully.")
         # Write the workspace ID to a file using os.getenv('GITHUB_ENV')
