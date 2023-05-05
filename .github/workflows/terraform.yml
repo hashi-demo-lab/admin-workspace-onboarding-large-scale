@@ -34,7 +34,7 @@ jobs:
     outputs: 
         workspaces: ${{ steps.get-workspace.outputs.workspaces }}
 
-  tfe-ws:
+  tfe-ws-plan:
     needs: parse-ws-config
     runs-on: ubuntu-latest
     strategy:
