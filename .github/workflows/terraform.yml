@@ -86,7 +86,7 @@ jobs:
           workspace: 'admin-ws-${{ matrix.workspaces }}'
           directory: ${{ env.TF_DIRECTORY }}
     outputs: 
-        ${{ matrix.workspaces }}: ${{ steps.upload.outputs.configuration_version_id }}
+        config-version: "${{ matrix.workspaces }}:${{ steps.upload.outputs.configuration_version_id }}"
 
   tfe-ws-run-plan:
     needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-ws-upload-config]
