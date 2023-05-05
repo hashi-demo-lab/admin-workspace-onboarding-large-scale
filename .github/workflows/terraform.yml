@@ -58,7 +58,3 @@ jobs:
         run: pip install -r ./.github/workflows/requirements.txt
       - name: check-create-workspace
         run: python ./.github/workflows/test.py
-        env:
-          WORKSPACE_NAME: ${{ matrix.workspaces }}
-          TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
-          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
