@@ -86,7 +86,7 @@ jobs:
           workspace: 'admin-ws-${{ matrix.workspaces }}'
           directory: ${{ env.TF_DIRECTORY }}
     outputs: 
-        config-version: "${{ matrix.workspaces }}:${{ steps.upload.outputs.configuration_version_id }}"
+        ${{ matrix.workspaces }}: ${{ steps.upload.outputs.configuration_version_id }}
 
   tfe-ws-run-plan:
     needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-ws-upload-config]
@@ -95,6 +95,7 @@ jobs:
       matrix: 
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
+      - run: echo ${{ needs.tfe-ws-upload-config.outputs[ ${{ matrix.workspaces }} ] }}
       - name: checkout-repo
         uses: actions/checkout@v3
       - name: Checkout tfc github-actions #only required whilst actions are private
@@ -109,7 +110,7 @@ jobs:
         continue-on-error: true
         id: run-plan
         with:
-          workspace: admin-ws-${{ env.TF_WORKSPACE }}
+          workspace: admin-ws-${{ matrix.workspaces }}
           configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
 
       - name: Log Error
