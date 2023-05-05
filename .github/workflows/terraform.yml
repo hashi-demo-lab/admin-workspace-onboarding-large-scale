@@ -34,7 +34,7 @@ jobs:
     outputs: 
         workspaces: ${{ steps.get-workspace.outputs.workspaces }}
 
-  tfe-ws-plan:
+  tfe-ws-pre-reqs:
     needs: parse-ws-config
     runs-on: ubuntu-latest
     strategy:
@@ -49,4 +49,12 @@ jobs:
         uses: mikefarah/yq@master
         with:
           cmd: yq ./config/${{ matrix.workspaces }}
+      - name: Setup Python
+        uses: actions/setup-python@v4.6.0
+        with:
+         python-version: '3.10' 
+      - run: python ./.github/test.py
+        env:
+          WORKSPACE_NAME: ${{ matrix.workspaces }}
+    
 
