@@ -14,7 +14,7 @@ headers = {
 }
 
 # Define the name of the workspace you want to create
-#workspace_name = os.getenv('WORKSPACE_NAME')
+workspace_name = os.getenv('WORKSPACE_NAME')
 
 # Check if the workspace already exists
 params = {"filter[name]": "workspace_name"}
