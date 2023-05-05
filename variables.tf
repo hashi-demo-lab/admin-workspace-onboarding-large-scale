@@ -6,7 +6,7 @@ variable "workspace-yaml-filepath" {
   default = ""
 
   validation {
-    condition     = length(var.workspace-yaml-path) > 6 && substr(var.workspace-yaml-path, 0, 6) == "config" && contains(".yaml")
+    condition     = length(var.workspace-yaml-filepath) > 6 && substr(var.workspace-yaml-filepath, 0, 6) == "config" && contains(".yaml")
     error_message = "please supply the full path to a single yaml file config Example: config/someworkspace.yaml"
   }
 }
