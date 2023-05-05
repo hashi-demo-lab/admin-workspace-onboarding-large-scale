@@ -41,11 +41,11 @@ jobs:
       matrix: 
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
-      - name: echo-file
+      - name: echo-filename
         run: echo ${{ matrix.workspaces }}
       - name: checkout-repo
         uses: actions/checkout@v3
-      - name: pretty-${{ matrix.workspaces }}
+      - name: log-${{ matrix.workspaces }}
         uses: mikefarah/yq@master
         with:
           cmd: yq ./config/${{ matrix.workspaces }}
@@ -60,4 +60,63 @@ jobs:
         run: python ./.github/workflows/test.py
         env:
           TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
-          WORKSPACE_NAME: ${{ matrix.workspaces }}
+          WORKSPACE_NAME: 'admin-ws-${{ matrix.workspaces }}'
+
+  tfe-ws-upload-config:
+    needs: [parse-ws-config, tfe-ws-pre-reqs]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        name: Checkout tfc github-actions #only required whilst actions are private
+        with:
+          repository: hashicorp/tfc-workflows-github
+          token: ${{ secrets.ACCESS_TOKEN }}
+          persist-credentials: false
+          path: ./.github/actions/tfc-workflows-github
+
+      - name: Upload configuration version
+        uses: ./.github/actions/tfc-workflows-github/actions/upload-configuration/
+        id: upload
+        with:
+          workspace: 'admin-ws-${{ matrix.workspaces }}'
+          directory: ${{ env.TF_DIRECTORY }}
+
+  tfe-ws-run-plan:
+    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-ws-upload-config]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
+    steps:
+      - name: Run Terraform Plan
+        uses: ./.github/actions/tfc-workflows-github/actions/create-run/
+        continue-on-error: true
+        id: run-plan
+        with:
+          workspace: admin-ws-${{ env.TF_WORKSPACE }}
+          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+
+      - name: Log Error
+        if: ${{ steps.run-plan.outputs.plan_status != 'finished' }} 
+        run: |
+          echo "An error occurred in the previous step."
+          echo "The error message was: ${{ steps.run-plan.outcome }}"
+          echo "run_status: ${{ steps.run-plan.outputs.run_status }}"
+          echo "run_status: ${{ steps.run-plan.outputs.plan_status }}"
+          
+      - name: Discard Terraform Run
+        if: ${{ steps.run-plan.outputs.plan_status != 'finished' }} 
+        uses: ./.github/actions/tfc-workflows-github/actions/discard-run/
+        id: discard-run
+        with:
+          run: ${{ steps.run-plan.outputs.run_id }}
+          comment: "Run discarded due to error ${{ steps.run-plan.outputs.plan_status }}"
+
+      - name: Catch Error   
+        if: ${{ steps.run-plan.outputs.plan_status != 'finished' }} 
+        run: | 
+          exit 1
