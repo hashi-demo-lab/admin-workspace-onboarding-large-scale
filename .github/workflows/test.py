@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import logging
 
 # Define the Terraform Cloud API endpoint and organization name
 API_ENDPOINT = "https://app.terraform.io/api/v2/organizations/{ORG_NAME}/workspaces"
@@ -23,7 +24,8 @@ try:
     workspaces = response.json()["data"]
     workspace_exists = any(workspace["attributes"]["name"] == workspace_name for workspace in workspaces)
 except requests.exceptions.RequestException as e:
-    raise SystemExit(f"Error: {e}") # print error message and exit the script
+    logging.error(f"Failed to retrieve workspace list. Error: {e}")
+    workspace_exists = False
 
 # If the workspace doesn't exist, create it
 if not workspace_exists:
