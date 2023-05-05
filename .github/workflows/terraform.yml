@@ -52,8 +52,12 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4.6.0
         with:
-         python-version: '3.10' 
-      - run: python ./.github/workflows/test.py
+         python-version: '3.10'
+         cache: 'pip'
+      - name: install-python-dep
+        run: pip install -r ./.github/workflows/requirements.txt
+      - name: check-create-workspace
+        run: python ./.github/workflows/test.py
         env:
           WORKSPACE_NAME: ${{ matrix.workspaces }}
     
