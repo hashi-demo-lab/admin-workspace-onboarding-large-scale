@@ -17,7 +17,7 @@ headers = {
 workspace_name = os.getenv('WORKSPACE_NAME')
 
 # Check if the workspace already exists
-params = {"filter[name]": "workspace_name"}
+params = {"filter[name]": workspace_name}
 try:
     response = requests.get(API_ENDPOINT.format(ORG_NAME=os.getenv('TF_CLOUD_ORGANIZATION')), headers=headers, params=params)
     response.raise_for_status() # raise an exception if response status code is not 200 OK
