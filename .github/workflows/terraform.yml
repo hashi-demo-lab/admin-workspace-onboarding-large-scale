@@ -95,7 +95,7 @@ jobs:
       matrix: 
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
-      - run: echo ${{ needs.tfe-ws-upload-config.outputs[ ${{ matrix.workspaces }} ] }}
+      - run: echo ${{ needs.tfe-ws-upload-config.outputs }}
       - name: checkout-repo
         uses: actions/checkout@v3
       - name: Checkout tfc github-actions #only required whilst actions are private
