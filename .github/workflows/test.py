@@ -34,10 +34,8 @@ if not workspace_exists:
         "data": {
             "type": "workspaces",
             "attributes": {
-                "name": "workspace_name",
+                "name": workspace_name,
                 "auto-apply": False,
-                "terraform_version": "1.4.6",
-                "working-directory": "",
             },
         }
     }
