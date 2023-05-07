@@ -95,7 +95,7 @@ jobs:
       matrix: 
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
-      - run: echo ${{ needs.tfe-ws-upload-config.outputs.${{ matrix.workspaces }}_result }}
+      - run: echo ${{ needs.tfe-ws-upload-config.outputs}}.${{ matrix.workspaces }}_result }}
 
   tfe-ws-run-plan_temp:
     needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-ws-upload-config]
