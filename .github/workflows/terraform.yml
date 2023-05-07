@@ -86,9 +86,18 @@ jobs:
           workspace: 'admin-ws-${{ matrix.workspaces }}'
           directory: ${{ env.TF_DIRECTORY }}
     outputs: 
-        config-version: "${{ matrix.workspaces }}:${{ steps.upload.outputs.configuration_version_id }}"
+        ${{ matrix.workspaces }}_result: ${{ steps.upload.outputs.configuration_version_id }}
 
   tfe-ws-run-plan:
+    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-ws-upload-config]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
+    steps:
+      - run: echo ${{ needs.tfe-ws-upload-config.outputs.${{ matrix.workspaces }}_result }}
+
+  tfe-ws-run-plan_temp:
     needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-ws-upload-config]
     runs-on: ubuntu-latest
     strategy:
