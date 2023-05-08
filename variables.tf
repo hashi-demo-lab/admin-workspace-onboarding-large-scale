@@ -15,12 +15,14 @@ variable "workspace-yaml-filepath" {
 variable "organization" {
   description = "TFC Organization to build under"
   type        = string
+  default = ""
 }
 
 # Workspace level variables
 variable "workspace_name" {
   description = "Name of the workspace to create"
   type        = string
+  default = ""
 }
 
 variable "workspace_description" {
