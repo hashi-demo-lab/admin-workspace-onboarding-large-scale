@@ -112,7 +112,6 @@ jobs:
       - name: output_results
         env:
           OUTPUT1: ${{ needs.rmatrix.outputs.result }}
-          OUT
         run: echo "$OUTPUT1"
         
       - name: checkout-repo
