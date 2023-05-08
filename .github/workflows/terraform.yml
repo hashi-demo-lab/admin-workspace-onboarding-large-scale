@@ -85,20 +85,31 @@ jobs:
         with:
           workspace: 'admin-ws-${{ matrix.workspaces }}'
           directory: ${{ env.TF_DIRECTORY }}
-    outputs: 
-        ${{ matrix.workspaces }}_result: ${{ steps.upload.outputs.configuration_version_id }}
+          
+      ## Write for matrix outputs workaround 
+      - uses: cloudposse/github-action-matrix-outputs-write@main
+        id: out
+        with:
+          matrix-step-name: ${{ github.job }}
+          matrix-key: ${{ matrix.workspaces }}
+          outputs: |-
+           tf-config-version: ${{ steps.upload.outputs.configuration_version_id }}
 
-  tfe-ws-run-plan:
-    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-ws-upload-config]
+  ## Read matrix outputs 
+  read:
     runs-on: ubuntu-latest
-    strategy:
-      matrix: 
-        workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
+    needs: [tfe-ws-upload-config]
     steps:
-      - run: echo ${{ needs.tfe-ws-upload-config.outputs}}.${{ matrix.workspaces }}_result }}
+      - uses: cloudposse/github-action-matrix-outputs-read@main
+        id: read
+        with:
+          matrix-step-name: upload
+
+    outputs:
+      result: "${{ steps.read.outputs.result }}"
 
   tfe-ws-run-plan_temp:
-    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-ws-upload-config]
+    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-ws-upload-config, read]
     runs-on: ubuntu-latest
     strategy:
       matrix: 
