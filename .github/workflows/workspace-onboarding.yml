@@ -58,7 +58,7 @@ jobs:
           TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
           WORKSPACE_NAME: 'admin-ws-${{ matrix.workspaces }}'
 
-  tf-configversion:
+  tfe-configversion:
     needs: [parse-ws-config, tfe-ws-pre-reqs]
     runs-on: ubuntu-latest
     strategy:
@@ -88,12 +88,12 @@ jobs:
           matrix-step-name: ${{ github.job }}
           matrix-key: ${{ matrix.workspaces }}
           outputs: |-
-            config: "test"
+            config: "${{ steps.tf-configversion.outputs.configuration_version_id}}"
 
   ## Read matrix outputs 
   rmatrix:
     runs-on: ubuntu-latest
-    needs: [parse-ws-config, tfe-ws-pre-reqs, tf-configversion]
+    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-configversion]
     steps:
       - uses: cloudposse/github-action-matrix-outputs-read@main
         id: readmatrix
@@ -103,7 +103,7 @@ jobs:
       result: "${{ steps.readmatrix.outputs.result }}"
 
   tfe-ws-run-plan_temp:
-    needs: [parse-ws-config, tfe-ws-pre-reqs, tf-configversion, rmatrix]
+    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-configversion, rmatrix]
     runs-on: ubuntu-latest
     strategy:
       matrix: 
