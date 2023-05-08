@@ -23,9 +23,6 @@ jobs:
         run: |
           cd config
           echo workspaces="$(ls *.yaml | jq -R . | jq -s . | sed 's/.yaml//g')" >> $GITHUB_OUTPUT
-          
-      - name: echo-workspaces
-        run: echo "${{ steps.get-workspace.outputs.workspaces }}"
       - name: validate-yaml-map
         uses: mikefarah/yq@master
         with:
