@@ -74,6 +74,24 @@ jobs:
           token: ${{ secrets.ACCESS_TOKEN }}
           persist-credentials: false
           path: ./.github/actions/tfc-workflows-github
+      - name: get-org
+        id: org
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq '.organization' ./config/${{ matrix.workspaces }}".yaml"
+
+      - name: get-workspace
+        id: workspace_name
+        uses: mikefarah/yq@master
+        with:
+         cmd: yq '.workspace_name' ./config/${{ matrix.workspaces }}".yaml"
+
+      - name: set-tfvars #auto tf vars
+        run: |
+          echo ${{ steps.org.outputs.result }}
+          echo ${{ steps.workspace_name.outputs.result }}
+          echo "organization=${{ steps.org.outputs.result }}" >> pipeline-generated.auto.tfvars
+          echo "workspac_name=${{ steps.workspace_name.outputs.result }}" >> pipeline-generated.auto.tfvars
 
       - name: Upload configuration version
         uses: ./.github/actions/tfc-workflows-github/actions/upload-configuration/
