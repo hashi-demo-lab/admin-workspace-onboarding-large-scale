@@ -90,7 +90,7 @@ jobs:
           outputs: |-
             config: ${{ steps.tfe-configversion.outputs.configuration_version_id}}
 
-  ## Read matrix outputs 
+  ## Read matrix outputs - this is using artifact until github supports
   rmatrix:
     runs-on: ubuntu-latest
     needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-configversion]
@@ -102,21 +102,27 @@ jobs:
     outputs:
       result: "${{ steps.readmatrix.outputs.result }}"
 
-  tfe-ws-run-plan_temp:
+  tfe-ws-run-plan:
     needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-configversion, rmatrix]
     runs-on: ubuntu-latest
     strategy:
       matrix: 
         workspaces: ${{ fromJson(needs.parse-ws-config.outputs.workspaces) }}
     steps:
-      - env:
+      - name: output_results
+        env:
           OUTPUT1: ${{ needs.rmatrix.outputs.result }}
+          OUT
         run: echo "$OUTPUT1"
-        name: output_results
-      - run: echo "${{ fromJson(needs.rmatrix.outputs.result)}}"
-        id: echo
+        
       - name: checkout-repo
         uses: actions/checkout@v3
         id: checkout
 
-
+      - name: Checkout tfc github-actions #only required whilst actions are private
+        uses: actions/checkout@v3
+        with:
+          repository: hashicorp/tfc-workflows-github
+          token: ${{ secrets.ACCESS_TOKEN }}
+          persist-credentials: false
+          path: ./.github/actions/tfc-workflows-github
