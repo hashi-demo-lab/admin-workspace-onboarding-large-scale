@@ -115,7 +115,7 @@ jobs:
       matrix: 
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
-      - run: echo "${{ toJSON(needs.read.outputs.result.config) }}"
+      - run: ${{ toJSON(needs.read.outputs.result) }}
         id: echo
       - name: checkout-repo
         uses: actions/checkout@v3
