@@ -93,7 +93,7 @@ jobs:
   ## Read matrix outputs 
   rmatrix:
     runs-on: ubuntu-latest
-    needs: [tf-configversion]
+    needs: [parse-ws-config, tfe-ws-pre-reqs, tf-configversion]
     steps:
       - uses: cloudposse/github-action-matrix-outputs-read@main
         id: readmatrix
