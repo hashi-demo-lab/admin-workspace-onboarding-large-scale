@@ -83,7 +83,7 @@ jobs:
           directory: ${{ env.TF_DIRECTORY }}
       
       - uses: cloudposse/github-action-matrix-outputs-write@main
-        id: wrot
+        id: writeoutput
         with:
           matrix-step-name: ${{ github.job }}
           matrix-key: ${{ matrix.workspaces }}
@@ -98,7 +98,7 @@ jobs:
       - uses: cloudposse/github-action-matrix-outputs-read@main
         id: readmatrix
         with:
-          matrix-step-name: writematrix
+          matrix-step-name: "tf-configversion"
     outputs:
       result: "${{ steps.readmatrix.outputs.result }}"
 
