@@ -114,9 +114,8 @@ jobs:
         env:
           OUTPUT1: ${{ needs.rmatrix.outputs.result }}
         run: | 
-          echo '${{ needs.rmatrix.outputs.result }}' | jq -r '.config."${{ matrix.workspaces }}"'
-          echo configversion=$(echo '${{ needs.rmatrix.outputs.result }}' | jq -r '.config."${{ matrix.workspaces }}")'
-          echo configversion=$(echo '${{ needs.rmatrix.outputs.result }}' | jq -r '.config."${{ matrix.workspaces }}")' >> $GITHUB_OUTPUT
+          export CONFIG_VERSION='${{ needs.rmatrix.outputs.result }}' | jq -r '.config."${{ matrix.workspaces }}"'
+          echo "configversion=$CONFIG_VERSION" >> $GITHUB_OUTPUT
       - name: checkout-repo
         uses: actions/checkout@v3
         id: checkout
