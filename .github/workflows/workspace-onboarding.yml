@@ -114,7 +114,7 @@ jobs:
         env:
           OUTPUT1: ${{ needs.rmatrix.outputs.result }}
         run: | 
-          export CONFIG_VERSION=$(echo '{{ needs.rmatrix.outputs.result }}' | jq -r '.config."${{ matrix.workspaces }}')
+          export CONFIG_VERSION=$(echo "{{ needs.rmatrix.outputs.result }}' | jq -r '.config."${{ matrix.workspaces }}")
           echo "configversion=$CONFIG_VERSION" >> $GITHUB_OUTPUT
       - name: echo config_version
         run: |
