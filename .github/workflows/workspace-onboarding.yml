@@ -22,7 +22,7 @@ jobs:
         id: get-workspace
         run: |
           cd config
-          echo "workspaces=$(ls *.yaml | jq -R . | jq -s . | sed 's/.yaml//g')" >> $GITHUB_OUTPUT
+          echo workspaces="$(ls *.yaml | jq -R . | jq -s . | sed 's/.yaml//g')" >> $GITHUB_OUTPUT
           
       - name: echo-workspaces
         run: echo "${{ steps.get-workspace.outputs.workspaces }}"
