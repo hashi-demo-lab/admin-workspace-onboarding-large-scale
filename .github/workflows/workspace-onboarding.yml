@@ -86,7 +86,7 @@ jobs:
       - uses: cloudposse/github-action-matrix-outputs-write@main
         id: out
         with:
-          matrix-step-name: tfe-ws-upload-config
+          matrix-step-name: ${{ github.job }}
           matrix-key: ${{ matrix.workspaces }}
           outputs: |-
             config: ${{ steps.upload.outputs.configuration_version_id }}
@@ -100,6 +100,8 @@ jobs:
         id: read
         with:
           matrix-step-name: upload
+      - name: echo matrix
+        run: echo "${{ steps.read.outputs.result }}"
 
     outputs:
       result: "${{ steps.read.outputs.result }}"
@@ -112,7 +114,7 @@ jobs:
       matrix: 
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
-      - run: ${{ toJSON(needs.read.outputs.result) }}
+      - run: ${{ needs.read.outputs.result }}
         id: echo
       - name: checkout-repo
         uses: actions/checkout@v3
