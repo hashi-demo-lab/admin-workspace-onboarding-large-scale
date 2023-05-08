@@ -90,7 +90,7 @@ jobs:
           outputs: |-
             config: ${{ steps.tfe-configversion.outputs.configuration_version_id}}
 
-  ## Read matrix outputs - this is using artifact until github supports
+  ## Read matrix outputs - using artifacts until github supports dynamic matric outputs
   rmatrix:
     runs-on: ubuntu-latest
     needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-configversion]
@@ -116,6 +116,9 @@ jobs:
         run: | 
           export CONFIG_VERSION='${{ needs.rmatrix.outputs.result }}' | jq -r '.config."${{ matrix.workspaces }}"'
           echo "configversion=$CONFIG_VERSION" >> $GITHUB_OUTPUT
+      - name: echo config_version
+        run: |
+          echo "${{steps.configversion.outputs.configversion}}"
       - name: checkout-repo
         uses: actions/checkout@v3
         id: checkout
