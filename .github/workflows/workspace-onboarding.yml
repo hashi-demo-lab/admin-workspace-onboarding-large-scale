@@ -113,9 +113,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
+        workspaces: ${{toJSON(needs.parse-ws-config.outputs.workspaces)}}
     steps:
-      - run: echo "${{ needs.read.outputs.result }}"
+      - run: echo "${{ toJSON(needs.read.outputs.result.config) }}"
         id: echo
       - name: checkout-repo
         uses: actions/checkout@v3
