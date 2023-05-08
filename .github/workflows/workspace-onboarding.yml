@@ -115,41 +115,10 @@ jobs:
       matrix: 
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
-      - run: echo ${{ needs.tfe-ws-upload-config.outputs }}
+      - run: echo ${{ needs.read.outputs }}
+        id: echo
       - name: checkout-repo
         uses: actions/checkout@v3
-      - name: Checkout tfc github-actions #only required whilst actions are private
-        uses: actions/checkout@v3
-        with:
-          repository: hashicorp/tfc-workflows-github
-          token: ${{ secrets.ACCESS_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/tfc-workflows-github
-      - name: Run Terraform Plan
-        uses: ./.github/actions/tfc-workflows-github/actions/create-run/
-        continue-on-error: true
-        id: run-plan
-        with:
-          workspace: admin-ws-${{ matrix.workspaces }}
-          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+        id: checkout
 
-      - name: Log Error
-        if: ${{ steps.run-plan.outputs.plan_status != 'finished' }} 
-        run: |
-          echo "An error occurred in the previous step."
-          echo "The error message was: ${{ steps.run-plan.outcome }}"
-          echo "run_status: ${{ steps.run-plan.outputs.run_status }}"
-          echo "run_status: ${{ steps.run-plan.outputs.plan_status }}"
-          
-      - name: Discard Terraform Run
-        if: ${{ steps.run-plan.outputs.plan_status != 'finished' }} 
-        uses: ./.github/actions/tfc-workflows-github/actions/discard-run/
-        id: discard-run
-        with:
-          run: ${{ steps.run-plan.outputs.run_id }}
-          comment: "Run discarded due to error ${{ steps.run-plan.outputs.plan_status }}"
 
-      - name: Catch Error   
-        if: ${{ steps.run-plan.outputs.plan_status != 'finished' }} 
-        run: | 
-          exit 1
