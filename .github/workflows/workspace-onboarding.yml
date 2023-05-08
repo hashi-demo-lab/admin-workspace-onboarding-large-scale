@@ -113,7 +113,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        workspaces: ${{toJSON(needs.parse-ws-config.outputs.workspaces)}}
+        workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
       - run: echo "${{ toJSON(needs.read.outputs.result.config) }}"
         id: echo
