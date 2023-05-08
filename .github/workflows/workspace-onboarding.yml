@@ -23,7 +23,8 @@ jobs:
         run: |
           cd config
           echo $(ls *.yaml | jq -R . | jq -s .)
-          echo "workspaces=$(echo $(ls *.yaml | jq -R . | jq -s .))" >> $GITHUB_OUTPUT
+          echo "workspaces=$(ls *.yaml | jq -R . | jq -s . | sed 's/.yaml//g')" >> $GITHUB_OUTPUT
+          
       - name: echo-workspaces
         run: echo "${{ steps.get-workspace.outputs.workspaces }}"
       - name: validate-yaml-map
@@ -48,7 +49,7 @@ jobs:
       - name: log-${{ matrix.workspaces }}
         uses: mikefarah/yq@master
         with:
-          cmd: yq ./config/${{ matrix.workspaces }}
+          cmd: yq ./config/${{ matrix.workspaces }}".yaml"
       - name: Setup Python
         uses: actions/setup-python@v4.6.0
         with:
