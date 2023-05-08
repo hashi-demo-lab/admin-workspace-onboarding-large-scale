@@ -15,7 +15,7 @@ variable "workspace-yaml-filepath" {
 variable "organization" {
   description = "TFC Organization to build under"
   type        = string
-  default = ""
+  default = "hashi-demos-apj"
 }
 
 # Workspace level variables
