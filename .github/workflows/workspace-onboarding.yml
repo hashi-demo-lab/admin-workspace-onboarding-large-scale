@@ -112,8 +112,9 @@ jobs:
       - name: output_results
         env:
           OUTPUT1: ${{ needs.rmatrix.outputs.result }}
-        run: echo "$OUTPUT1"
-        
+        run: | 
+          echo "${{ needs.rmatrix.outputs.result }}" | jq '.config."${{ matrix.workspaces }}"'
+          echo "${{ needs.rmatrix.outputs.result }}" | jq '.config."${{ matrix.workspaces }}"' >> $GITHUB_OUTPUT
       - name: checkout-repo
         uses: actions/checkout@v3
         id: checkout
