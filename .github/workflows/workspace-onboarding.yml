@@ -151,6 +151,7 @@ jobs:
           token: ${{ secrets.ACCESS_TOKEN }}
           persist-credentials: false
           path: ./.github/actions/tfc-workflows-github
+
       - name: Run Terraform Plan
         uses: ./.github/actions/tfc-workflows-github/actions/create-run/
         continue-on-error: true
@@ -160,6 +161,7 @@ jobs:
         with:
           workspace: ${{ matrix.workspaces }}
           configuration_version: ${{ steps.configversion.outputs.configversion }}
+
       - name: Log Error
         if: ${{ steps.run-plan.outputs.plan_status != 'finished' }} 
         run: |
@@ -167,6 +169,7 @@ jobs:
           echo "The error message was: ${{ steps.run-plan.outcome }}"
           echo "run_status: ${{ steps.run-plan.outputs.run_status }}"
           echo "run_status: ${{ steps.run-plan.outputs.plan_status }}"
+          echo "payload: ${{ steps.run-plan.outputs.payload }}"
         
       - name: Discard Terraform Run
         if: ${{ steps.run-plan.outputs.plan_status != 'finished' }} 
