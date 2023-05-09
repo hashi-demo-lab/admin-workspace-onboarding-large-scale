@@ -16,6 +16,7 @@ headers = {
 # Define the name of the workspace you want to create
 workspace_yaml = os.getenv('WORKSPACE_NAME')
 workspace_name = workspace_yaml.replace(".yaml", "")
+project_id = os.getenv('PROJECT_ID')
 
 # Check if the workspace already exists
 params = {"filter[name]": workspace_name}
@@ -37,6 +38,14 @@ if not workspace_exists:
                 "name": workspace_name,
                 "auto-apply": False,
             },
+            "relationships": {
+            "project": {
+            "data": {
+                "type": "projects",
+                "id": project_id
+            }
+            }
+            }
         }
     }
     try:
