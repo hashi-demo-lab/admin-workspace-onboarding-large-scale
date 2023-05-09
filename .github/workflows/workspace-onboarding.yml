@@ -156,8 +156,6 @@ jobs:
         uses: ./.github/actions/tfc-workflows-github/actions/create-run/
         continue-on-error: true
         id: run-plan
-        env:
-          TFE_TOKEN: ${{ secrets.TF_API_TOKEN }}
         with:
           workspace: ${{ matrix.workspaces }}
           configuration_version: ${{ steps.configversion.outputs.configversion }}
