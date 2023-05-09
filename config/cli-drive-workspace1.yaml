@@ -2,7 +2,7 @@ organization: hashi-demos-apj
 workspace_name: dev1-cli-workspace
 create_project: false
 create_repo: false
-create_variable_set: true
+create_variable_set: false
 workspace_tags:
   - nsx
 var_sets:

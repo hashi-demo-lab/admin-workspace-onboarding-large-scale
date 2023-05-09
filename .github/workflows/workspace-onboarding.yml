@@ -168,7 +168,7 @@ jobs:
           echo "An error occurred in the previous step."
           echo "The error message was: ${{ steps.run-plan.outcome }}"
           echo "run_status: ${{ steps.run-plan.outputs.run_status }}"
-          echo "run_status: ${{ steps.run-plan.outputs.plan_status }}"
+          echo "plan_status: ${{ steps.run-plan.outputs.plan_status }}"
           echo "payload: ${{ steps.run-plan.outputs.payload }}"
         
       - name: Discard Terraform Run
