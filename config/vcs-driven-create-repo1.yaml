@@ -2,7 +2,7 @@ organization: hashi-demos-apj
 workspace_name: vcs-driven-newrepo
 create_project: false
 create_repo: true
-project_name: MyProject
+project_name: Simons Project
 file_triggers_enabled: false
 create_variable_set: false
 github:
