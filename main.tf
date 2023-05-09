@@ -65,7 +65,7 @@ module "workspace" {
 
   organization                = each.value.organization
   create_project              = try(each.value.create_project, false)
-  project_name                = try(each.value.project_name, "")
+  project_name                = try(each.value.project_name, "Default Project")
   workspace_name              = each.value.workspace_name
   workspace_description       = try(each.value.workspace_description, "")
   workspace_terraform_version = try(each.value.workspace_terraform_version, "")
