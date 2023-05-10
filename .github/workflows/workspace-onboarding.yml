@@ -119,7 +119,7 @@ jobs:
       - uses: cloudposse/github-action-matrix-outputs-read@main
         id: readmatrix
         with:
-          matrix-step-name: "tfe-configversion"
+          matrix-step-name: "tfe-cfg"
     outputs:
       result: "${{ steps.readmatrix.outputs.result }}"
 
