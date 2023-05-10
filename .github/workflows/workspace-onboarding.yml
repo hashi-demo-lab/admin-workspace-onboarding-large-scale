@@ -157,7 +157,7 @@ jobs:
         continue-on-error: true
         id: run-plan
         with:
-          workspace: ${{ matrix.workspaces }}
+          workspace: admin-ws-${{ matrix.workspaces }}
           configuration_version: ${{ steps.configversion.outputs.configversion }}
 
       - name: Log Error
