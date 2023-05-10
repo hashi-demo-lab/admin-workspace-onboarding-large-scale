@@ -194,3 +194,18 @@ jobs:
           echo "Resources to Add: ${{ steps.plan-output.outputs.add }}"
           echo "Resources to Change: ${{ steps.plan-output.outputs.change }}"
           echo "Resources to Destroy: ${{ steps.plan-output.outputs.destroy }}"
+
+      - name: Run Terraform Apply
+        uses: ./.github/actions/tfc-workflows-github/actions/apply-run/
+        id: apply
+        with:
+          run: ${{ steps.run-plan.outputs.run_id }}
+          comment: "Confirmed from GitHub Actions CI"
+
+      - name: Show run output
+        uses: ./.github/actions/tfc-workflows-github/actions/show-run
+        id: show-run
+        with:
+          run: ${{ steps.apply.outputs.run_id }}
+      - run: |
+          echo "Latest Run Status: ${{ steps.show-run.outputs.run_status }}"
