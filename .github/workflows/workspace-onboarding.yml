@@ -59,7 +59,7 @@ jobs:
           TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
           WORKSPACE_NAME: 'admin-ws-${{ matrix.workspaces }}'
 
-  tfe-configversion:
+  tfe-config:
     needs: [parse-ws-config, tfe-ws-pre-reqs]
     runs-on: ubuntu-latest
     strategy:
@@ -114,7 +114,7 @@ jobs:
   ## Read matrix outputs - using artifacts until github supports dynamic matric outputs
   rmatrix:
     runs-on: ubuntu-latest
-    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-configversion]
+    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-config]
     steps:
       - uses: cloudposse/github-action-matrix-outputs-read@main
         id: readmatrix
@@ -124,7 +124,7 @@ jobs:
       result: "${{ steps.readmatrix.outputs.result }}"
 
   tfe-ws-run-plan:
-    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-configversion, rmatrix]
+    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-config, rmatrix]
     runs-on: ubuntu-latest
     strategy:
       matrix: 
