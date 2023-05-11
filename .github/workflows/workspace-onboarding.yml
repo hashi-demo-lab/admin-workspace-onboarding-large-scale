@@ -37,6 +37,8 @@ jobs:
       matrix: 
         admin_workspaces: ${{fromJson(needs.parse-ws-config.outputs.admin_workspaces)}}
     steps:
+      - name: checkout-repo
+        uses: actions/checkout@v3
       - name: echo-filename
         run: echo ${{ matrix.admin_workspaces }}
       - name: get-workspace-yaml
