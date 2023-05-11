@@ -43,7 +43,7 @@ jobs:
 
 
   tfe-ws-prereqs:
-    needs: parse-ws-config
+    needs: admin-matrix
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 15
