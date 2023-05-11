@@ -54,7 +54,7 @@ jobs:
 
 
   tfe-ws-prereqs:
-    needs: admin-matrix
+    needs: tfe-ws-grp
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 15
