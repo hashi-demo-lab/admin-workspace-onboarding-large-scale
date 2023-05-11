@@ -1,4 +1,8 @@
-This GitHub Action Workflow automates the process of onboarding new workspaces in the Terraform Cloud  using the Terraform Cloud API driven workflow.
+
+
+This GitHub Action Workflow automates the process of onboarding new TFC workspaces in the Terraform Cloud  using the TFE Provider and a Terraform Cloud API driven workflow.
+
+See: https://github.com/hashicorp/tfc-workflows-github
 
 The action performs the following steps:
 - Parses a YAML configuration file that contains the list of workspaces to be onboarded.
