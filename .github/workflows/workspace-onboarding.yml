@@ -34,6 +34,7 @@ jobs:
     needs: parse-ws-config
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 15
       matrix: 
         workspaces: ${{fromJson(needs.parse-ws-config.outputs.workspaces)}}
     steps:
@@ -53,7 +54,7 @@ jobs:
       - name: install-python-dep
         run: pip install -r ./.github/workflows/requirements.txt
       - name: check-create-workspace
-        run: python ./.github/workflows/test.py
+        run: python ./.github/workflows/create-admin-workspace.py
         env:
           TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
           WORKSPACE_NAME: 'admin-ws-${{ matrix.workspaces }}'
@@ -62,6 +63,7 @@ jobs:
     needs: [parse-ws-config, tfe-ws-prereqs]
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 15
       matrix: 
         workspaces: ${{ fromJson(needs.parse-ws-config.outputs.workspaces) }}
     steps:
@@ -120,6 +122,7 @@ jobs:
     needs: [parse-ws-config, tfe-ws-prereqs, tfe-cfg, rmatrix]
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 15
       matrix: 
         workspaces: ${{ fromJson(needs.parse-ws-config.outputs.workspaces) }}
     steps:
