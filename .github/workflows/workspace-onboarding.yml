@@ -31,7 +31,7 @@ jobs:
     outputs: 
         workspaces: ${{ steps.get-workspace.outputs.workspaces }}
 
-  tfe-ws-pre-reqs:
+  tfe-ws-prereqs:
     needs: parse-ws-config
     runs-on: ubuntu-latest
     strategy:
@@ -60,7 +60,7 @@ jobs:
           WORKSPACE_NAME: 'admin-ws-${{ matrix.workspaces }}'
 
   tfe-cfg:
-    needs: [parse-ws-config, tfe-ws-pre-reqs]
+    needs: [parse-ws-config, tfe-ws-prereqs]
     runs-on: ubuntu-latest
     strategy:
       matrix: 
@@ -97,7 +97,7 @@ jobs:
           cat pipeline-generated.auto.tfvars
 
       - name: Upload configuration version
-        uses: ./.github/actions/tfc-workflows-github/actions/upload-configuration/
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
         id: tfe-configversion
         with:
           workspace: 'admin-ws-${{ matrix.workspaces }}'
@@ -114,7 +114,7 @@ jobs:
   ## Read matrix outputs - using artifacts until github supports dynamic matric outputs
   rmatrix:
     runs-on: ubuntu-latest
-    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-cfg]
+    needs: [parse-ws-config, tfe-ws-prereqs, tfe-cfg]
     steps:
       - uses: cloudposse/github-action-matrix-outputs-read@main
         id: readmatrix
@@ -123,8 +123,8 @@ jobs:
     outputs:
       result: "${{ steps.readmatrix.outputs.result }}"
 
-  tfe-ws-run-plan:
-    needs: [parse-ws-config, tfe-ws-pre-reqs, tfe-cfg, rmatrix]
+  tfe-ws-run:
+    needs: [parse-ws-config, tfe-ws-prereqs, tfe-cfg, rmatrix]
     runs-on: ubuntu-latest
     strategy:
       matrix: 
