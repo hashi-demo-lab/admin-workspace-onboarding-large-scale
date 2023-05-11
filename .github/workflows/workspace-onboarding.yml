@@ -10,7 +10,6 @@ env:
   TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
   TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
   TF_DIRECTORY: ""
-  ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
   PROJECT_ID: ${{ vars.PROJECT_ID }}
   
 jobs:
@@ -157,7 +156,7 @@ jobs:
         
       - name: Discard Terraform Run
         if: ${{ steps.run-plan.outputs.plan_status != 'finished' }} 
-        uses: ./.github/actions/tfc-workflows-github/actions/discard-run/
+        uses: hashicorp/tfc-workflows-github/actions/discard-run@v1.0.0
         id: discard-run
         with:
           run: ${{ steps.run-plan.outputs.run_id }}
@@ -168,7 +167,7 @@ jobs:
         run: | 
           exit 1
       
-      - uses: ./.github/actions/tfc-workflows-github/actions/plan-output
+      - uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
         name: Get plan output
         id: plan-output
         with:
@@ -182,14 +181,14 @@ jobs:
           echo "Resources to Destroy: ${{ steps.plan-output.outputs.destroy }}"
 
       - name: Run Terraform Apply
-        uses: ./.github/actions/tfc-workflows-github/actions/apply-run/
+        uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.0
         id: apply
         with:
           run: ${{ steps.run-plan.outputs.run_id }}
           comment: "Confirmed from GitHub Actions CI"
 
       - name: Show run output
-        uses: ./.github/actions/tfc-workflows-github/actions/show-run
+        uses: hashicorp/tfc-workflows-github/actions/show-run@v1.0.0
         id: show-run
         with:
           run: ${{ steps.apply.outputs.run_id }}
