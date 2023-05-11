@@ -68,13 +68,7 @@ jobs:
     steps:
       - name: checkout-repo
         uses: actions/checkout@v3
-      - name: Checkout tfc github-actions #only required whilst actions are private
-        uses: actions/checkout@v3
-        with:
-          repository: hashicorp/tfc-workflows-github
-          token: ${{ secrets.ACCESS_TOKEN }}
-          persist-credentials: false
-          path: ./.github/actions/tfc-workflows-github
+
       - name: get-org
         id: org
         uses: mikefarah/yq@master
