@@ -22,11 +22,12 @@ jobs:
         id: get-workspace
         run: |
           cd config
+          ls -d */ | sed 's|/$||' | jq -R . | jq -s .
           echo "admin_workspaces"=$(ls -d */ | sed 's|/$||' | jq -R . | jq -s . )"" >> $GITHUB_OUTPUT
           ##  echo "workspaces="$(ls *.yaml | jq -R . | jq -s . | sed 's/.yaml//g')"" >> $GITHUB_OUTPUT
     outputs: 
         workspaces: ${{ steps.get-workspace.outputs.workspaces }}
-        admin_workspaces: ${{ steps.get-workspace.outputs.workspaces }}
+        admin_workspaces: ${{ steps.get-workspace.outputs.admin_workspaces }}
 
   admin-matrix:
     needs: parse-ws-config
