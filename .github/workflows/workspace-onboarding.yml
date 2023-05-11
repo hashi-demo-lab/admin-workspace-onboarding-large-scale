@@ -51,6 +51,10 @@ jobs:
         id: validate
         run: |
             echo ${{steps.get-workspace.outputs.workspace}}
+      - name: validate-yaml-map
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq --exit-status 'tag == "!!map"' ./config/${{ matrix.admin_workspaces }}/*.yaml -v; 
       - name: exit
         run: exit 1
 
