@@ -50,7 +50,7 @@ jobs:
       - name: validate
         id: validate
         run: |
-            echo ${{steps.get-workspace.outputs.get-workspace}}
+            echo ${{steps.get-workspace.outputs.workspace}}
       - name: exit
         run: exit 1
 
