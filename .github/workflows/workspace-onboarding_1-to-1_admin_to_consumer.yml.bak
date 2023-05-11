@@ -22,25 +22,13 @@ jobs:
         id: get-workspace
         run: |
           cd config
-          echo "admin_workspaces"=$(ls -d */ | sed 's|/$||' | jq -R . | jq -s . )"" >> $GITHUB_OUTPUT
-          ##  echo "workspaces="$(ls *.yaml | jq -R . | jq -s . | sed 's/.yaml//g')"" >> $GITHUB_OUTPUT
+          echo "workspaces="$(ls *.yaml | jq -R . | jq -s . | sed 's/.yaml//g')"" >> $GITHUB_OUTPUT
+      - name: validate-yaml-map
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq --exit-status 'tag == "!!map"' ./config/*.yaml -v; 
     outputs: 
         workspaces: ${{ steps.get-workspace.outputs.workspaces }}
-        admin_workspaces: ${{ steps.get-workspace.outputs.workspaces }}
-
-  admin-matrix:
-    needs: parse-ws-config
-    runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 15
-      matrix: 
-        workspaces: ${{fromJson(needs.parse-ws-config.outputs.admin_workspaces)}}
-    steps:
-      - name: echo-filename
-        run: echo ${{ matrix.workspaces }}
-      - name: exit
-        run: exit 1
-
 
   tfe-ws-prereqs:
     needs: parse-ws-config
