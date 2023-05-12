@@ -39,7 +39,7 @@ jobs:
         id: admin-ws
         run: | 
             echo ${{needs.parse-ws-config.outputs.admin_workspaces}}
-            jq -r '.[]' <<< ${{needs.parse-ws-config.outputs.admin_workspaces}} | paste -sd "," -)
+            jq -r '.[]' <<< ${{needs.parse-ws-config.outputs.admin_workspaces}} | paste -sd "," -
       - name: log fileset
         run: |
           ${{ steps.admin-ws.outputs.result }}
