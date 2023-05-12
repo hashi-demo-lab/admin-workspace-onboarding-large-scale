@@ -39,10 +39,10 @@ jobs:
         id: admin-ws
         run: | 
             echo ${{needs.parse-ws-config.outputs.admin_workspaces}}
-            echo 'fileset=$(jq -r '.[]' <<< '${{needs.parse-ws-config.outputs.admin_workspaces}}' | paste -sd "," -)' >> $GITHUB_OUTPUT
+            echo 'jq -r '.[]' <<< ${{needs.parse-ws-config.outputs.admin_workspaces}} | paste -sd "," -)'
       - name: log fileset
         run: |
-          ${{ steps.admin-ws.outputs.fileset }}
+          ${{ steps.admin-ws.outputs.result }}
 
   tfe-ws-admin:
     needs: [parse-ws-config,tfe-ws-parent]
