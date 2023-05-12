@@ -44,7 +44,7 @@ jobs:
             echo "admin_fileset=$ADMIN_FILESET" >> $GITHUB_OUTPUT
       - name: log fileset
         run: |
-          ${{ steps.admin-ws.outputs.admin_fileset }}
+          echo "admin_fileset:"${{ steps.admin-ws.outputs.admin_fileset }}
 
   tfe-ws-admin:
     needs: [parse-ws-config,tfe-ws-parent]
