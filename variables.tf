@@ -3,7 +3,7 @@
 variable "workspace-yaml-filepath" {
   description = "TFC Organization to build under"
   type        = string
-  default = "dummy.yaml"
+  default = "config/{admin-group1,admin-group2}/*.yaml"
 
   validation {
     condition     = length(var.workspace-yaml-filepath) > 6 && substr(var.workspace-yaml-filepath, 0, 6) == "config"

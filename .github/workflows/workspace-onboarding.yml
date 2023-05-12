@@ -24,13 +24,23 @@ jobs:
           cd config
           ls -d */ | sed 's|/$||' | jq -R . | jq -s .
           echo "admin_workspaces"=$(ls -d */ | sed 's|/$||' | jq -R . | jq -s . )"" >> $GITHUB_OUTPUT
+          
           ##  echo "workspaces="$(ls *.yaml | jq -R . | jq -s . | sed 's/.yaml//g')"" >> $GITHUB_OUTPUT
+          ##  "config/{admin-group1,admin-group2}/*.yaml"
     outputs: 
         workspaces: ${{ steps.admin-workspace.outputs.workspaces }}
         admin_workspaces: ${{ steps.admin-workspace.outputs.admin_workspaces }}
 
-  tfe-ws-grp:
+  tfe-ws-parent:
     needs: parse-ws-config
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        run: | 
+            echo ${{fromJson(needs.parse-ws-config.outputs.admin_workspaces)}}
+
+  tfe-ws-admin:
+    needs: [parse-ws-config,tfe-ws-parent]
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 15
@@ -47,10 +57,12 @@ jobs:
           cd config/${{ matrix.admin_workspaces }}
           ls *.yaml | jq -R . | jq -s . | sed 's/.yaml//g'
           echo "workspace="$(ls *.yaml | jq -R . | jq -s . | sed 's/.yaml//g')"" >> $GITHUB_OUTPUT
+
       - name: validate
         id: validate
         run: |
             echo ${{steps.get-workspace.outputs.workspace}}
+
       - name: validate-yaml-map
         uses: mikefarah/yq@master
         with:
