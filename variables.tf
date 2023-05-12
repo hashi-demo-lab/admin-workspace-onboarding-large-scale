@@ -18,12 +18,12 @@ variable "organization" {
   default = "hashi-demos-apj"
 }
 
-# Workspace level variables
+/* # Workspace level variables
 variable "workspace_name" {
   description = "Name of the workspace to create"
   type        = string
   default = ""
-}
+} */
 
 variable "workspace_description" {
   description = "Description of workspace"

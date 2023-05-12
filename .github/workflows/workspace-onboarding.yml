@@ -59,9 +59,32 @@ jobs:
         env:
           TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
           WORKSPACE_NAME: 'admin-ws-parent-admin'
+    outputs: 
+      admin_fileset: ${{ steps.admin-ws.outputs.admin_fileset }}
 
-  tfe-ws-admin:
+  tfe-ws-parent-cfg:
     needs: [parse-ws-config,tfe-ws-parent]
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout-repo
+        uses: actions/checkout@v3
+
+      - name: set-tfvars #auto tf vars
+        run: |
+          echo ${{ needs.tfe-ws-parent.outputs.admin_fileset }}
+          echo 'organization="${{ vars.TF_CLOUD_ORGANIZATION }}"' >> pipeline-generated.auto.tfvars
+          echo 'workspace-yaml-filepath="${{needs.tfe-ws-parent.outputs.admin_fileset}}"' >> pipeline-generated.auto.tfvars
+          cat pipeline-generated.auto.tfvars
+
+      - name: Upload configuration version
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
+        id: parent-tfe-config
+        with:
+          workspace: 'admin-ws-parent-admin'
+          directory: ${{ env.TF_DIRECTORY }}
+      
+  tfe-ws-admin:
+    needs: [parse-ws-config,tfe-ws-parent-cfg,tfe-ws-parent]
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 15
