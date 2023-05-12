@@ -38,6 +38,8 @@ jobs:
       - name: echo
         run: | 
             echo ${{needs.parse-ws-config.outputs.admin_workspaces}}
+            jq -r '.[]' <<< '${{needs.parse-ws-config.outputs.admin_workspaces}}' | paste -sd "," -
+
 
   tfe-ws-admin:
     needs: [parse-ws-config,tfe-ws-parent]
