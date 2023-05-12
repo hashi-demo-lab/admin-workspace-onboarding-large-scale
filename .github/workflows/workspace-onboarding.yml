@@ -150,10 +150,7 @@ jobs:
       - run: |
           echo "Latest Run Status: ${{ steps.show-run.outputs.run_status }}"
 
-
-
-
-  tfe-ws-admin:
+  tfe-ws-cfg-admin:
     needs: [parse-ws-config,tfe-parent-cfg, tfe-ws-parent-run,tfe-ws-parent]
     runs-on: ubuntu-latest
     strategy:
@@ -163,6 +160,7 @@ jobs:
     steps:
       - name: checkout-repo
         uses: actions/checkout@v3
+        
       - name: echo-filename
         run: echo ${{ matrix.admin_workspaces }}
       - name: get-workspace-yaml
