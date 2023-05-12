@@ -45,6 +45,18 @@ jobs:
       - name: log fileset
         run: |
           echo "admin_fileset:"${{ steps.admin-ws.outputs.admin_fileset }}
+      - name: Setup Python
+        uses: actions/setup-python@v4.6.0
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - name: install-python-dep
+        run: pip install -r ./.github/workflows/requirements.txt
+      - name: check-create-workspace
+        run: python ./.github/workflows/create-admin-workspace.py
+        env:
+          TF_CLOUD_ORGANIZATION: ${{ vars.TF_CLOUD_ORGANIZATION }}
+          WORKSPACE_NAME: 'admin-ws-parent-admin'
 
   tfe-ws-admin:
     needs: [parse-ws-config,tfe-ws-parent]
