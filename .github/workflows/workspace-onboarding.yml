@@ -36,10 +36,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo
+        id: admin-ws
         run: | 
             echo ${{needs.parse-ws-config.outputs.admin_workspaces}}
-            jq -r '.[]' <<< '${{needs.parse-ws-config.outputs.admin_workspaces}}' | paste -sd "," -
-
+            echo 'fileset=$(jq -r '.[]' <<< '${{needs.parse-ws-config.outputs.admin_workspaces}}' | paste -sd "," -)' >> $GITHUB_OUTPUT
+      - name: log fileset
+        run: |
+          ${{ steps.admin-ws.outputs.fileset }}
 
   tfe-ws-admin:
     needs: [parse-ws-config,tfe-ws-parent]
