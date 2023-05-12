@@ -41,7 +41,7 @@ jobs:
             echo ${{needs.parse-ws-config.outputs.admin_workspaces}}
             jq -r '.[]' <<< '${{needs.parse-ws-config.outputs.admin_workspaces}}' | paste -sd "," -
             export ADMIN_FILESET="$(jq -r '.[]' <<< '${{needs.parse-ws-config.outputs.admin_workspaces}}' | paste -sd "," -)"
-            echo "admin_fileset=$ADMIN_FILESET" >> $GITHUB_OUTPUT
+            echo "admin_fileset=/config/{$ADMIN_FILESET}/*.yaml" >> $GITHUB_OUTPUT
       - name: log fileset
         run: |
           echo "admin_fileset:"${{ steps.admin-ws.outputs.admin_fileset }}
