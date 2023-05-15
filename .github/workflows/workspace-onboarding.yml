@@ -195,7 +195,6 @@ jobs:
           echo ${{ steps.org.outputs.result }}
           echo ${{ steps.workspace_name.outputs.result }}
           echo 'organization="${{ steps.org.outputs.result }}"' >> pipeline-generated.auto.tfvars
-          echo 'workspace_name="${{ steps.workspace_name.outputs.result }}"' >> pipeline-generated.auto.tfvars
           echo 'workspace-yaml-filepath="config/${{ matrix.admin_workspaces }}/consumer/*.yaml"' >> pipeline-generated.auto.tfvars
           cat pipeline-generated.auto.tfvars
 
