@@ -203,7 +203,7 @@ jobs:
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
         id: tfe-configversion
         with:
-          workspace: 'admin-${{ matrix.admin_workspaces }}'
+          workspace: ${{ matrix.admin_workspaces }}
           directory: ${{ env.TF_DIRECTORY }}
 
       - uses: cloudposse/github-action-matrix-outputs-write@main
