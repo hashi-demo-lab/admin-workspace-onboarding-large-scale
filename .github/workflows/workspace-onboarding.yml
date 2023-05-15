@@ -297,9 +297,9 @@ jobs:
         with:
           run: ${{ steps.run-plan.outputs.run_id }}
       - run: |
-          echo "Latest Run Status: ${{ steps.show-run-plan.outputs.run_status }}"
-          echo "payload: ${{ steps.show-run-plan.outputs.payload }}"
-          echo "run_link: ${{ steps.show-run-plan.outputs.run_link }}" 
+          echo 'Latest Run Status: ${{ steps.show-run-plan.outputs.run_status }}'
+          echo 'payload: ${{ steps.show-run-plan.outputs.payload }}'
+          echo 'run_link: ${{ steps.show-run-plan.outputs.run_link }}'
 
       - name: Run Terraform Apply
         uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.0
@@ -314,6 +314,6 @@ jobs:
         with:
           run: ${{ steps.apply.outputs.run_id }}
       - run: |
-          echo "Latest Run Status: ${{ steps.show-run.outputs.run_status }}"
-          echo "payload: ${{ steps.show-run.outputs.payload }}"
-          echo "run_link: ${{ steps.show-run.outputs.run_link }}" 
+          echo 'Latest Run Status: ${{ steps.show-run.outputs.run_status }}'
+          echo 'payload: ${{ steps.show-run.outputs.payload }}'
+          echo 'run_link: ${{ steps.show-run.outputs.run_link }}'
