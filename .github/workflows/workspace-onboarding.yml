@@ -290,6 +290,7 @@ jobs:
           echo "Resources to Add: ${{ steps.plan-output.outputs.add }}"
           echo "Resources to Change: ${{ steps.plan-output.outputs.change }}"
           echo "Resources to Destroy: ${{ steps.plan-output.outputs.destroy }}"
+          echo "plan_id: ${{ steps.plan-output.outputs.plan_id }}"
 
       - name: Run Terraform Apply
         uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.0
@@ -305,3 +306,5 @@ jobs:
           run: ${{ steps.apply.outputs.run_id }}
       - run: |
           echo "Latest Run Status: ${{ steps.show-run.outputs.run_status }}"
+          echo "payload: ${{ steps.show-run.outputs.payload }}"
+          echo "run_link: ${{ steps.show-run.outputs.run_link }}" 
