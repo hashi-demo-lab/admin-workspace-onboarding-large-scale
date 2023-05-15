@@ -69,7 +69,7 @@ jobs:
       - name: checkout-repo
         uses: actions/checkout@v3
 
-      - name: set-tfvars #auto tf vars
+      - name: set-tfvars #auto tf vars  
         run: |
           echo ${{ needs.tfe-ws-parent.outputs.admin_fileset }}
           echo 'organization="${{ vars.TF_CLOUD_ORGANIZATION }}"' >> pipeline-generated.auto.tfvars
@@ -150,7 +150,7 @@ jobs:
       - run: |
           echo "Latest Run Status: ${{ steps.show-run.outputs.run_status }}"
 
-  tfe-ws-cfg-admin:
+  tfe-ws-cfg-grp:
     needs: [parse-ws-config,tfe-parent-cfg, tfe-ws-parent-run,tfe-ws-parent]
     runs-on: ubuntu-latest
     strategy:
@@ -174,17 +174,54 @@ jobs:
         id: validate
         run: |
             echo ${{steps.get-workspace.outputs.workspace}}
-
-      - name: validate-yaml-map
+      - name: get-org
+        id: org
         uses: mikefarah/yq@master
         with:
-          cmd: yq --exit-status 'tag == "!!map"' ./config/${{ matrix.admin_workspaces }}/*.yaml -v; 
-      - name: exit
+          cmd: yq '.organization' ./config/${{ matrix.admin_workspaces }}/${{ matrix.admin_workspaces }}".yaml"
+      - name: get-workspace
+        id: workspace_name
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq '.workspace_name' ./config/${{ matrix.admin_workspaces }}/${{ matrix.admin_workspaces }}".yaml"   
+
+      - name: validate-yaml-consumer
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq --exit-status 'tag == "!!map"' ./config/${{ matrix.admin_workspaces }}/consumer/*.yaml -v; 
+
+      - name: set-tfvars #auto tf vars - group workspaces ##  "config/{matrix.admin_workspace}/consumer/*.yaml"
+        run: |
+          echo ${{ steps.org.outputs.result }}
+          echo ${{ steps.workspace_name.outputs.result }}
+          echo 'organization="${{ steps.org.outputs.result }}"' >> pipeline-generated.auto.tfvars
+          echo 'workspace_name="${{ steps.workspace_name.outputs.result }}"' >> pipeline-generated.auto.tfvars
+          echo 'workspace-yaml-filepath="config/${{ matrix.admin_workspaces }}/consumer/*.yaml"' >> pipeline-generated.auto.tfvars
+          cat pipeline-generated.auto.tfvars
+
+      - name: Upload configuration version
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
+        id: tfe-configversion
+        with:
+          workspace: 'admin-${{ matrix.admin_workspaces }}'
+          directory: ${{ env.TF_DIRECTORY }}
+
+      - uses: cloudposse/github-action-matrix-outputs-write@main
+        id: writeoutput
+        with:
+          matrix-step-name: ${{ github.job }}
+          matrix-key: ${{ matrix.admin_workspaces }}
+          outputs: |-
+            config: ${{ steps.tfe-configversion.outputs.configuration_version_id}}
+
+      - name: exit - intentional exit
         run: exit 1
 
 
+        #### UP TO HERE 
+
   tfe-ws-prereqs:
-    needs: tfe-ws-cfg-admin
+    needs: tfe-ws-cfg-grp
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 15
