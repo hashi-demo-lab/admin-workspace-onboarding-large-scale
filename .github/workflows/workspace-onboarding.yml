@@ -32,7 +32,7 @@ jobs:
         admin_workspaces: ${{ steps.admin-workspace.outputs.admin_workspaces }}
 
   tfe-ws-parent:
-    needs: parse-ws-config
+    needs: [parse-ws-config]
     runs-on: ubuntu-latest
     steps:
       - name: checkout-repo
@@ -63,7 +63,7 @@ jobs:
       admin_fileset: ${{ steps.admin-ws.outputs.admin_fileset }}
 
   tfe-parent-cfg:
-    needs: [parse-ws-config,tfe-ws-parent]
+    needs: [tfe-ws-parent]
     runs-on: ubuntu-latest
     steps:
       - name: checkout-repo
@@ -86,7 +86,7 @@ jobs:
       configversion: ${{ steps.parent-tfe-config.outputs.configuration_version_id }}
 
   tfe-ws-parent-run:
-    needs: [parse-ws-config,tfe-ws-parent, tfe-parent-cfg]
+    needs: [tfe-parent-cfg]
     runs-on: ubuntu-latest
     steps:
       - name: checkout-repo
@@ -151,7 +151,7 @@ jobs:
           echo "Latest Run Status: ${{ steps.show-run.outputs.run_status }}"
 
   tfe-ws-cfg-grp:
-    needs: [parse-ws-config,tfe-parent-cfg, tfe-ws-parent-run,tfe-ws-parent]
+    needs: [tfe-ws-parent-run, parse-ws-config]
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 15
@@ -217,7 +217,7 @@ jobs:
   ## Read matrix outputs - using artifacts until github supports dynamic matric outputs
   rmatrix:
     runs-on: ubuntu-latest
-    needs: [parse-ws-config, tfe-ws-cfg-grp]
+    needs: [tfe-ws-cfg-grp]
     steps:
       - uses: cloudposse/github-action-matrix-outputs-read@main
         id: readmatrix
@@ -228,7 +228,7 @@ jobs:
 
       
   tfe-ws-run:
-    needs: [parse-ws-config, tfe-ws-cfg-grp, rmatrix]
+    needs: [rmatrix,parse-ws-config]
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 15
@@ -254,7 +254,7 @@ jobs:
         continue-on-error: true
         id: run-plan
         with:
-          workspace: admin-ws-${{ matrix.workspaces }}
+          workspace: ${{ matrix.workspaces }}
           configuration_version: ${{ steps.configversion.outputs.configversion }}
 
       - name: Log Error
