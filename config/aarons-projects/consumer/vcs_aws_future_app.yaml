@@ -6,7 +6,7 @@ project_name: Aarons Projects
 file_triggers_enabled: false
 create_variable_set: false
 vcs_repo:
-  identifier: hashicorp-demo-lab/vcs-aws-future-app
+  identifier: hashi-demo-lab/vcs-aws-future-app
   branch: main
   tags_regex: ^\d+.\d+.\d+$
   ingress_submodules: null
