@@ -1,5 +1,5 @@
 organization: hashi-demos-apj
-workspace_name: aarons-projects-admin-group
+workspace_name: aarons-projects
 create_project: false
 project_name: admin-projects
 create_repo: false
