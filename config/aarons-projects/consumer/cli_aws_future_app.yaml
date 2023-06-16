@@ -1,0 +1,6 @@
+organization: hashi-demos-apj
+workspace_name: cli-aws-future-app
+create_project: false
+project_name: Aarons AWS Projects
+create_repo: false
+create_variable_set: false

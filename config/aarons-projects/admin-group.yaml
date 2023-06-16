@@ -1,0 +1,6 @@
+organization: hashi-demos-apj
+workspace_name: aarons-projects-admin-group
+create_project: false
+project_name: admin-projects
+create_repo: false
+create_variable_set: false
