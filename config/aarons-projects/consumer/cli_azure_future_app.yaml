@@ -1,5 +1,5 @@
 organization: hashi-demos-apj
-workspace_name: cli-aws-future-app
+workspace_name: cli-azure-future-app
 create_project: false
 project_name: Aarons Azure Projects
 create_repo: false
