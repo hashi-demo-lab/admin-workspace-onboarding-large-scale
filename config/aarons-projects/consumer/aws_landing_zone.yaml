@@ -12,6 +12,5 @@ agent_pool_name: AaronPool
 vcs_repo:
   identifier: hashi-demo-lab/aws_landing_zone
   branch: main
-  tags_regex: ^\d+.\d+.\d+$
   ingress_submodules: null
   oauth_token_id: ot-EEzS6zKkh8tEBC7o
