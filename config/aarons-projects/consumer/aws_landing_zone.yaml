@@ -1,0 +1,17 @@
+organization: hashi-demos-apj
+workspace_name: aws_landing_zone
+create_project: false
+create_repo: false
+project_name: Aarons AWS Projects
+file_triggers_enabled: true
+workspace_auto_apply: true
+create_variable_set: false
+workspace_agents: true
+execution_mode: agent
+agent_pool_name: AaronPool
+vcs_repo:
+  identifier: hashi-demo-lab/aws_landing_zone
+  branch: main
+  tags_regex: ^\d+.\d+.\d+$
+  ingress_submodules: null
+  oauth_token_id: ot-EEzS6zKkh8tEBC7o
