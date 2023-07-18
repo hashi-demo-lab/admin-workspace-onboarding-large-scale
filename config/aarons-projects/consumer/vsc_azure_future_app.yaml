@@ -9,6 +9,5 @@ create_variable_set: false
 vcs_repo:
   identifier: hashi-demo-lab/vcs-azure-future-app
   branch: main
-  tags_regex: ^\d+.\d+.\d+$
   ingress_submodules: null
   oauth_token_id: ot-EEzS6zKkh8tEBC7o
