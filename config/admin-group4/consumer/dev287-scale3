@@ -1,0 +1,6 @@
+create_project: false
+create_repo: false
+create_variable_set: false
+organization: hashi-demos-apj
+project_name: Simons Project
+workspace_name: dev287-scale4
