@@ -18,7 +18,7 @@ for i in range(1, 501):
     }
 
     # Create a YAML file with the data
-    file_name = os.path.join(output_dir, f"dev{i}-scale3")
+    file_name = os.path.join(output_dir, f"dev{i}-scale3.yaml")
     with open(file_name, "w") as file:
         yaml.dump(data, file)
 
