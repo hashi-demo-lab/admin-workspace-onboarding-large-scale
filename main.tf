@@ -24,7 +24,7 @@ locals {
 }
 
 module "terraform-tfe-variable-sets" {
-  source = "github.com/hashi-demo-lab/terraform-tfe-variable-sets?ref=v0.3.7"
+  source = "github.com/hashi-demo-lab/terraform-tfe-variable-sets?ref=v0.4.0"
 
   for_each = local.varsetMap
 
@@ -55,7 +55,7 @@ module "github" {
 }
 
 module "workspace" {
-  source = "github.com/hashi-demo-lab/terraform-tfe-onboarding-module?ref=v0.3.0"
+  source = "github.com/hashi-demo-lab/terraform-tfe-onboarding-module?ref=v0.4.0"
 
   depends_on = [
     module.github
