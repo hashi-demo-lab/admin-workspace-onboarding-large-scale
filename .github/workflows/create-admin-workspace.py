@@ -19,7 +19,7 @@ workspace_name = workspace_yaml.replace(".yaml", "")
 project_id = os.getenv('PROJECT_ID')
 
 # Check if the workspace already exists
-params = {"filter[name]": workspace_name}
+params = {"search[name]": workspace_name}
 try:
     response = requests.get(API_ENDPOINT.format(ORG_NAME=os.getenv('TF_CLOUD_ORGANIZATION')), headers=headers, params=params)
     response.raise_for_status() # raise an exception if response status code is not 200 OK
