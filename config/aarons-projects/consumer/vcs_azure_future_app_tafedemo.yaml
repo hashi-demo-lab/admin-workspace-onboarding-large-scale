@@ -6,8 +6,6 @@ project_name: Aarons Azure Projects
 file_triggers_enabled: false
 workspace_auto_apply: true
 create_variable_set: false
-execution_mode: agent
-agent_pool_name: AaronPool
 vcs_repo:
   identifier: hashi-demo-lab/vcs-azure-future-app
   branch: main
