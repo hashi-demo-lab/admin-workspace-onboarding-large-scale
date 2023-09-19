@@ -55,7 +55,7 @@ module "github" {
 }
 
 module "workspace" {
-  source = "github.com/hashi-demo-lab/terraform-tfe-onboarding-module?ref=v0.4.0"
+  source = "github.com/hashi-demo-lab/terraform-tfe-onboarding-module?ref=v0.4.1"
 
   depends_on = [
     module.github
