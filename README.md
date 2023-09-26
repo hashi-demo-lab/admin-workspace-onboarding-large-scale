@@ -1,4 +1,4 @@
-
+[![workspace-onboarding-api](https://github.com/hashi-demo-lab/admin-workspace-onboarding-large-scale/actions/workflows/workspace-onboarding.yml/badge.svg)](https://github.com/hashi-demo-lab/admin-workspace-onboarding-large-scale/actions/workflows/workspace-onboarding.yml)
 
 This GitHub Action Workflow automates the process of onboarding new TFC workspaces in the Terraform Cloud  using the TFE Provider and a Terraform Cloud API driven workflow.
 
