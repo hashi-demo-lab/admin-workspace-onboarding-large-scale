@@ -103,11 +103,11 @@ jobs:
       - name: Log Error
         if: ${{ steps.run-plan.outputs.plan_status != 'finished' }} 
         run: |
-          echo "An error occurred in the previous step."
-          echo "The error message was: ${{ steps.run-plan.outcome }}"
-          echo "run_status: ${{ steps.run-plan.outputs.run_status }}"
-          echo "plan_status: ${{ steps.run-plan.outputs.plan_status }}"
-          echo "payload: ${{ steps.run-plan.outputs.payload }}"
+          echo 'An error occurred in the previous step.'
+          echo 'The error message was: ${{ steps.run-plan.outcome }}'
+          echo 'run_status: ${{ steps.run-plan.outputs.run_status }}'
+          echo 'plan_status: ${{ steps.run-plan.outputs.plan_status }}'
+          echo 'payload: ${{ steps.run-plan.outputs.payload }}'
           
       - name: Discard Terraform Run
         if: ${{ steps.run-plan.outputs.plan_status != 'finished' }} 
@@ -130,10 +130,10 @@ jobs:
       
       - name: Reference plan output
         run: |
-          echo "Plan status: ${{ steps.plan-output.outputs.plan_status }}"
-          echo "Resources to Add: ${{ steps.plan-output.outputs.add }}"
-          echo "Resources to Change: ${{ steps.plan-output.outputs.change }}"
-          echo "Resources to Destroy: ${{ steps.plan-output.outputs.destroy }}"
+          echo 'Plan status: ${{ steps.plan-output.outputs.plan_status }}'
+          echo 'Resources to Add: ${{ steps.plan-output.outputs.add }}'
+          echo 'Resources to Change: ${{ steps.plan-output.outputs.change }}'
+          echo 'Resources to Destroy: ${{ steps.plan-output.outputs.destroy }}'
 
       - name: Run Terraform Apply
         uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.0
@@ -286,11 +286,11 @@ jobs:
       
       - name: Reference plan output
         run: |
-          echo "Plan status: ${{ steps.plan-output.outputs.plan_status }}"
-          echo "Resources to Add: ${{ steps.plan-output.outputs.add }}"
-          echo "Resources to Change: ${{ steps.plan-output.outputs.change }}"
-          echo "Resources to Destroy: ${{ steps.plan-output.outputs.destroy }}"
-          echo "plan_id: ${{ steps.plan-output.outputs.plan_id }}"
+          echo 'Plan status: ${{ steps.plan-output.outputs.plan_status }}'
+          echo 'Resources to Add: ${{ steps.plan-output.outputs.add }}'
+          echo 'Resources to Change: ${{ steps.plan-output.outputs.change }}'
+          echo 'Resources to Destroy: ${{ steps.plan-output.outputs.destroy }}'
+          echo 'plan_id: ${{ steps.plan-output.outputs.plan_id }}'
       - name: Show run output plan
         uses: hashicorp/tfc-workflows-github/actions/show-run@v1.0.0
         id: show-run-plan
