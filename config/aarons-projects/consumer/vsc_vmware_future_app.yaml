@@ -1,7 +1,7 @@
 organization: hashi-demos-apj
 workspace_name: vcs-vmware-future-app
 create_project: true
-create_repo: false
+create_repo: true
 project_name: Aarons VMware Project
 file_triggers_enabled: false
 workspace_auto_apply: true
@@ -9,8 +9,3 @@ create_variable_set: false
 workspace_agents: true
 execution_mode: agent
 agent_pool_name: AaronPool
-vcs_repo:
-  identifier: hashi-demo-lab/vcs-aws-future-app
-  branch: main
-  ingress_submodules: null
-  oauth_token_id: ot-EEzS6zKkh8tEBC7o
