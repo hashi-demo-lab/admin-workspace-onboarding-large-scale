@@ -1,7 +1,7 @@
 organization: hashi-demos-apj
 workspace_name: vsc-kubernetes-hashibank
 create_project: false
-create_repo: true
+create_repo: false
 project_name: Aarons K8s Project
 file_triggers_enabled: false
 workspace_auto_apply: true
