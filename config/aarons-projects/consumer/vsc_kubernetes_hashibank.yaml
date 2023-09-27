@@ -1,0 +1,16 @@
+organization: hashi-demos-apj
+workspace_name: vsc-kubernetes-hashibank
+create_project: false
+create_repo: true
+project_name: Aarons K8s Project
+file_triggers_enabled: false
+workspace_auto_apply: true
+create_variable_set: false
+workspace_agents: true
+execution_mode: agent
+agent_pool_name: AaronPool
+vcs_repo:
+  identifier: hashi-demo-lab/terraform-k8s-hashibank
+  branch: main
+  ingress_submodules: null
+  oauth_token_id: ot-EEzS6zKkh8tEBC7o
