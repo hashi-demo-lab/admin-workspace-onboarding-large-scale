@@ -24,7 +24,7 @@ locals {
 }
 
 module "terraform-tfe-variable-sets" {
-  source = "github.com/hashi-demo-lab/terraform-tfe-variable-sets?ref=v0.4.0"
+  source = "github.com/hashi-demo-lab/terraform-tfe-variable-sets?ref=v0.5.0"
 
   for_each = local.varsetMap
 
