@@ -1,0 +1,16 @@
+organization: tfo-apj-demos
+workspace_name: vmw_tfc_agent_as_a_service
+create_project: false
+create_repo: false
+project_name: 10 - gcve-foundations
+file_triggers_enabled: false
+workspace_auto_apply: true
+create_variable_set: false
+workspace_agents: true
+execution_mode: agent
+agent_pool_name: vsphere-agent_pool
+vcs_repo:
+  identifier: tfo-apj-demos/terraform-vsphere-virtual-machine
+  branch: main
+  ingress_submodules: null
+  oauth_token_id: ot-EEzS6zKkh8tEBC7o
